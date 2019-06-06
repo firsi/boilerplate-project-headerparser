@@ -24,7 +24,16 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-
+// Get client info
+app.get("/api/whoami", (req, res) => {
+  var global_ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
+    var ip = global_ip.split(",")[0];
+    res.json({
+              "ipaddress":ip,
+              "language" : req.get("Accept-Language"),
+              "software" : req.get("User-Agent")
+    });
+});
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
